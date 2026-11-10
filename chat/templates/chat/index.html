@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relay | Recovery starts with a question</title>
+  <link rel="stylesheet" href="{% static 'chat/chat.css' %}">
+  <script src="{% static 'chat/chat.js' %}" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="/" aria-label="Relay home"><span class="mark" aria-hidden="true">r.</span>relay<span class="brand-note">RECOVERY, TOGETHER</span></a><span class="header-note">A little clarity. A next step.</span></header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <span class="eyebrow">YOUR RECOVERY COMPANION</span>
+      <h1 id="page-title">Recovery starts<br>with a question.</h1>
+      <p>Ask about disaster recovery assistance, documents, or applications. Take it one step at a time.</p>
+      <div class="privacy"><strong>No account needed.</strong><br>Leave out names, ID numbers, and other private details. Your conversation clears when you refresh or close this page.</div>
+    </section>
+    <section class="chat-panel" aria-labelledby="chat-heading">
+      <div class="chat-header"><div><span class="eyebrow">LET’S WORK THROUGH IT</span><h2 id="chat-heading">Ask Relay</h2></div><button id="clear" class="quiet" type="button">New chat</button></div>
+      {% if backend_pending %}<p class="notice">Project setup: the answer service is not connected yet. You can test sending a question, but recovery answers are not available.</p>{% endif %}
+      <div id="messages" role="log" aria-live="polite" aria-relevant="additions text" aria-label="Conversation" tabindex="0">
+        <div class="welcome"><span class="mini-mark" aria-hidden="true">r.</span><h3>What would you like help with?</h3><p>Use your own words. You don’t need to know where to start.</p></div>
+      </div>
+      <div id="suggestions" class="suggestions" aria-label="Example questions">
+        <button type="button">What documents might I need after a flood?</button>
+        <button type="button">How do I understand an assistance denial?</button>
+      </div>
+      <p id="status" role="status"></p>
+      <form id="chat-form" action="{% url 'chat:ask' %}" method="post">
+        {% csrf_token %}
+        <label for="question">Your question</label>
+        <div class="composer"><textarea id="question" name="question" rows="2" maxlength="2000" placeholder="Tell us what you need help understanding…" required aria-describedby="input-help"></textarea><button id="send" type="submit">Send <span aria-hidden="true">↗</span></button></div>
+        <p id="input-help">Enter to send · Shift + Enter for a new line · Up to 2,000 characters</p>
+      </form>
+      <noscript><p class="notice">Enable JavaScript to use this chat.</p></noscript>
+    </section>
+  </main>
+  <footer>Relay helps you understand recovery information. Assistance decisions are made by the relevant agency.</footer>
+</body>
+</html>
