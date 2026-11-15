@@ -1,0 +1,28 @@
+{% extends "chat/admin_base.html" %}
+{% block title %}Usage logs{% endblock %}
+{% block content %}
+<h1>Usage logs</h1>
+<div class="cards">
+  <div class="card"><strong>{{ total_all }}</strong>Total queries</div>
+  <div class="card"><strong>{{ total_24h }}</strong>Last 24 hours</div>
+  <div class="card"><strong>{% if avg_ms %}{{ avg_ms|floatformat:0 }} ms{% else %}—{% endif %}</strong>Avg response time</div>
+</div>
+<p>Show: <a href="?">All</a>{% for value, label in outcome_choices %} · <a href="?outcome={{ value }}">{{ label }}</a>{% endfor %}</p>
+<table>
+  <tr><th>Time (UTC)</th><th>Outcome</th><th>Response time (ms)</th><th>Search / Claude (ms)</th><th>Chunks</th><th>Sources cited</th></tr>
+  {% for q in page %}
+  <tr>
+    <td>{{ q.created_at|date:"Y-m-d H:i:s" }}</td>
+    <td {% if q.is_error %}class="bad"{% endif %}>{{ q.get_outcome_display }}{% if q.is_error %} ({{ q.status_code }} {{ q.error_type }}){% endif %}</td>
+    <td>{{ q.response_time_ms }}</td>
+    <td>{{ q.retrieval_ms|default_if_none:"—" }} / {{ q.generation_ms|default_if_none:"—" }}</td>
+    <td>{{ q.retrieved_chunks }}</td><td>{{ q.cited_sources }}</td>
+  </tr>
+  {% empty %}<tr><td colspan="6" class="muted">No queries logged yet.</td></tr>{% endfor %}
+</table>
+<p>
+  {% if page.has_previous %}<a href="?page={{ page.previous_page_number }}{% if outcome %}&outcome={{ outcome }}{% endif %}">← Newer</a>{% endif %}
+  Page {{ page.number }} of {{ page.paginator.num_pages }}
+  {% if page.has_next %}<a href="?page={{ page.next_page_number }}{% if outcome %}&outcome={{ outcome }}{% endif %}">Older →</a>{% endif %}
+</p>
+{% endblock %}
