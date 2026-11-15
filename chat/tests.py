@@ -5,8 +5,10 @@ from django.test import Client, SimpleTestCase, override_settings
 
 from .services import get_answer
 
-
-@override_settings(STORAGES={"staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"}})
+@override_settings(
+    STORAGES={"staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"}},
+    RELAY_ANSWER_BACKEND="chat.services.unavailable_backend",
+)
 class ChatTests(SimpleTestCase):
     def post(self, data):
         return self.client.post('/api/chat/', json.dumps(data), content_type='application/json')

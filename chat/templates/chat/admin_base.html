@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} | Relay admin</title>
+  {% block head %}{% endblock %}
+  <style>
+    body{font-family:system-ui,sans-serif;margin:0;color:#1d1d1f;background:#faf8f5}
+    header{display:flex;gap:1.5rem;align-items:center;padding:1rem 2rem;border-bottom:1px solid #ddd;background:#fff}
+    header a{color:#1d1d1f;text-decoration:none}header a.active{font-weight:700;text-decoration:underline}
+    main{max-width:960px;margin:0 auto;padding:1.5rem 2rem}
+    table{width:100%;border-collapse:collapse;background:#fff;margin:1rem 0}
+    th,td{padding:.5rem .75rem;border-bottom:1px solid #eee;text-align:left}
+    th{background:#f3efe9}.muted{color:#666}.warn{background:#fff3cd;border:1px solid #e0b84b;padding:.75rem 1rem}
+    .bad{color:#b00020;font-weight:600}.cards{display:flex;gap:1rem;flex-wrap:wrap}
+    .card{background:#fff;border:1px solid #ddd;padding:1rem 1.5rem;min-width:140px}.card strong{display:block;font-size:1.6rem}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="{% url 'chat:index' %}"><strong>relay</strong> admin</a>
+    <a href="{% url 'chat:admin_performance' %}" {% if request.resolver_match.url_name == 'admin_performance' %}class="active"{% endif %}>Performance</a>
+    <a href="{% url 'chat:admin_logs' %}" {% if request.resolver_match.url_name == 'admin_logs' %}class="active"{% endif %}>Usage logs</a>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+</body>
+</html>

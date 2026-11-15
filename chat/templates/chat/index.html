@@ -9,7 +9,7 @@
   <script src="{% static 'chat/chat.js' %}" defer></script>
 </head>
 <body>
-  <header><a class="brand" href="/" aria-label="Relay home"><span class="mark" aria-hidden="true">r.</span>relay<span class="brand-note">RECOVERY, TOGETHER</span></a><span class="header-note">A little clarity. A next step.</span></header>
+<header><a class="brand" href="/" aria-label="Relay home"><span class="mark" aria-hidden="true">r.</span>relay<span class="brand-note">RECOVERY, TOGETHER</span></a><span class="header-note">A little clarity. A next step.</span>{% if user.is_staff %}<a class="admin-link" href="{% url 'chat:admin_performance' %}">Admin</a>{% endif %}</header>
   <main>
     <section class="intro" aria-labelledby="page-title">
       <span class="eyebrow">YOUR RECOVERY COMPANION</span>

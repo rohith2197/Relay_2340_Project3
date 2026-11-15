@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 
 from django.conf import settings
 from django.http import JsonResponse
@@ -8,6 +9,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_GET, require_POST
 
 from .services import BackendUnavailable, get_answer
+from .usage import record_failure
 
 logger = logging.getLogger(__name__)
 
@@ -50,11 +52,16 @@ def ask(request):
     ):
         return JsonResponse({"error": "Invalid conversation history. Start a new chat."}, status=400)
     history = [{"role": m["role"], "content": m["content"]} for m in history]
+    started = time.perf_counter()
     try:
         return JsonResponse(get_answer(question.strip(), history))
     except BackendUnavailable:
+        record_failure(started, 503, "BackendUnavailable")
         return JsonResponse({"error": "Relay’s answer service is not connected yet. Please try again once the project backend is ready."}, status=503)
     except Exception as exc:
+        record_failure(started, 502, type(exc).__name__)
         # Do not log questions, history, credentials, or backend exception text.
         logger.error("Answer service failure: %s", type(exc).__name__)
         return JsonResponse({"error": "Relay could not get an answer. Please try again."}, status=502)
+    record_query(started, question, 200)
+    return JsonResponse(answer)

@@ -1,0 +1,39 @@
+{% extends "chat/admin_base.html" %}
+{% block title %}Performance{% endblock %}
+{% block head %}<meta http-equiv="refresh" content="30">{% endblock %}
+{% block content %}
+<h1>System performance</h1>
+<p class="muted">Latency is total response time in ms for queries that did not error. Target: p95 under {{ target_ms }} ms. Refreshes every 30 seconds.</p>
+{% if any_slow %}<p class="warn"><strong>Warning:</strong> p95 latency is above the responsiveness target in at least one window.</p>{% endif %}
+<table>
+  <tr><th>Window</th><th>Queries</th><th>Failures</th><th>Failure rate</th><th>Avg</th><th>p50</th><th>p95</th></tr>
+  {% for r in stats %}
+  <tr>
+    <td>{{ r.label }}</td><td>{{ r.total }}</td><td>{{ r.failures }}</td>
+    <td>{% if r.failure_rate is None %}—{% else %}{{ r.failure_rate }}%{% endif %}</td>
+    <td>{{ r.avg|default_if_none:"—" }}</td><td>{{ r.p50|default_if_none:"—" }}</td>
+    <td {% if r.slow %}class="bad"{% endif %}>{{ r.p95|default_if_none:"—" }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>Where the time goes (last 24 hours, average ms)</h2>
+<table>
+  <tr><th>Stage</th><th>Avg ms</th></tr>
+  {% for label, value in stages %}<tr><td>{{ label }}</td><td>{{ value|default_if_none:"—" }}</td></tr>{% endfor %}
+</table>
+
+<h2>Outcomes (last 24 hours)</h2>
+<table>
+  <tr><th>Outcome</th><th>Queries</th></tr>
+  {% for label, n in outcomes %}<tr><td>{{ label }}</td><td>{{ n }}</td></tr>{% endfor %}
+</table>
+
+<h2>Recent failures</h2>
+<table>
+  <tr><th>Time (UTC)</th><th>Status</th><th>Error type</th><th>Time to fail (ms)</th></tr>
+  {% for f in recent_failures %}
+  <tr><td>{{ f.created_at|date:"Y-m-d H:i:s" }}</td><td>{{ f.status_code }}</td><td>{{ f.error_type|default:"—" }}</td><td>{{ f.response_time_ms }}</td></tr>
+  {% empty %}<tr><td colspan="4" class="muted">No failures recorded.</td></tr>{% endfor %}
+</table>
+{% endblock %}
