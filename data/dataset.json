@@ -1,0 +1,12 @@
+{
+  "documents": [
+    {
+      "slug": "texas-floods-team-notes",
+      "title": "Texas Hill Country floods: barriers to recovery aid",
+      "file": "sources/texas_floods.txt",
+      "source_url": "",
+      "disaster_type": "flood",
+      "phase": "recovery"
+    }
+  ]
+}
