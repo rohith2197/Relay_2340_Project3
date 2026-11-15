@@ -41,6 +41,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 300_000
 
 INSTALLED_APPS = [
     'chat',
+    'knowledge',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
