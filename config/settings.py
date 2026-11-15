@@ -36,12 +36,27 @@ SECURE_HSTS_SECONDS = 3600 if not DEBUG else 0
 RELAY_ANSWER_BACKEND = os.environ.get("RELAY_ANSWER_BACKEND", "chat.services.unavailable_backend")
 DATA_UPLOAD_MAX_MEMORY_SIZE = 300_000
 
+# RAG engine (rag app). The Anthropic API key is read from ANTHROPIC_API_KEY by the SDK.
+RELAY_LLM_MODEL = os.environ.get("RELAY_LLM_MODEL", "claude-haiku-5-5")
+RELAY_LLM_EFFORT = os.environ.get("RELAY_LLM_EFFORT", "low")
+RELAY_REWRITE_MODEL = os.environ.get("RELAY_REWRITE_MODEL", "claude-haiku-5-5")
+RELAY_QUERY_REWRITE = os.environ.get("RELAY_QUERY_REWRITE", "1") == "1"
+RELAY_LLM_TIMEOUT = float(os.environ.get("RELAY_LLM_TIMEOUT", "30"))
+RELAY_RETRIEVAL_K = int(os.environ.get("RELAY_RETRIEVAL_K", "6"))
+# Embeddings for vector search, via OpenRouter (OpenAI-compatible embeddings API).
+RELAY_EMBEDDING_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
+RELAY_EMBEDDING_MODEL = os.environ.get("RELAY_EMBEDDING_MODEL", "openai/text-embedding-3-small")
+RELAY_EMBEDDING_URL = os.environ.get("RELAY_EMBEDDING_URL", "https://openrouter.ai/api/v1/embeddings")
+RELAY_EMBEDDING_TIMEOUT = float(os.environ.get("RELAY_EMBEDDING_TIMEOUT", "20"))
+RELAY_MIN_SIMILARITY = float(os.environ.get("RELAY_MIN_SIMILARITY", "0.3"))
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'chat',
     'knowledge',
+    'rag',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

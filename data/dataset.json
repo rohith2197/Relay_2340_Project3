@@ -7,6 +7,174 @@
       "source_url": "",
       "disaster_type": "flood",
       "phase": "recovery"
+    },
+    {
+      "slug": "fema-eligibility",
+      "title": "FEMA: Eligibility Criteria for FEMA Assistance",
+      "file": "sources/fema_eligibility.txt",
+      "source_url": "https://www.fema.gov/assistance/individual/program/eligibility",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "fema-citizenship-status",
+      "title": "FEMA: Citizenship and Immigration Status Requirements",
+      "file": "sources/fema_citizenship_status.txt",
+      "source_url": "https://www.fema.gov/assistance/individual/program/citizenship-immigration-status",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "fema-citizenship-faq",
+      "title": "FEMA FAQ: Citizenship Status, Eligibility and Information Sharing (2018)",
+      "file": "sources/fema_citizenship_faq.txt",
+      "source_url": "https://www.fema.gov/press-release/20250602/faq-citizenship-status-and-eligibility-disaster-assistance",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "fema-ownership-occupancy",
+      "title": "FEMA: Verifying Home Ownership or Occupancy",
+      "file": "sources/fema_ownership_occupancy.txt",
+      "source_url": "https://www.fema.gov/assistance/individual/after-applying/verifying-home-ownership-occupancy",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "usagov-replace-id",
+      "title": "USAGov: How to replace lost or stolen ID cards",
+      "file": "sources/usagov_replace_id.txt",
+      "source_url": "https://www.usa.gov/replace-vital-documents",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "fema-appeals",
+      "title": "FEMA: Disagreeing with FEMA's Decision (how to appeal)",
+      "file": "sources/fema_appeals.txt",
+      "source_url": "https://www.fema.gov/assistance/individual/after-applying/appeals",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "fema-understanding-letter",
+      "title": "FEMA: Understanding Your FEMA Letter",
+      "file": "sources/fema_understanding_letter.txt",
+      "source_url": "https://www.fema.gov/assistance/individual/after-applying/understanding-letter",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "fema-after-applying",
+      "title": "FEMA: I Applied for Assistance. What's Next?",
+      "file": "sources/fema_after_applying.txt",
+      "source_url": "https://www.fema.gov/assistance/individual/after-applying",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "fema-disaster-fraud",
+      "title": "FEMA: Disaster Fraud (spotting scams and real FEMA contacts)",
+      "file": "sources/fema_disaster_fraud.txt",
+      "source_url": "https://www.fema.gov/assistance/individual/disaster-fraud",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "fema-recovery-centers",
+      "title": "FEMA: Disaster Recovery Centers (in-person help)",
+      "file": "sources/fema_recovery_centers.txt",
+      "source_url": "https://egateway.fema.gov/ESF6/DRCLocator",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "fema-recovery-programs",
+      "title": "FEMA: Programs to Support Your Recovery (free legal help, case management, counseling)",
+      "file": "sources/fema_recovery_programs.txt",
+      "source_url": "https://www.fema.gov/assistance/individual/disaster-survivors",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "cfr-206-113-eligibility",
+      "title": "44 CFR 206.113: Eligibility factors (federal regulation)",
+      "file": "sources/cfr_206_113_eligibility.txt",
+      "source_url": "https://www.ecfr.gov/current/title-44/chapter-I/subchapter-D/part-206/subpart-D/section-206.113",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "cfr-206-115-appeals",
+      "title": "44 CFR 206.115: Appeals (federal regulation)",
+      "file": "sources/cfr_206_115_appeals.txt",
+      "source_url": "https://www.ecfr.gov/current/title-44/chapter-I/subchapter-D/part-206/subpart-D/section-206.115",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "cfr-206-164-legal-services",
+      "title": "44 CFR 206.164: Disaster legal services (federal regulation)",
+      "file": "sources/cfr_206_164_legal_services.txt",
+      "source_url": "https://www.ecfr.gov/current/title-44/chapter-I/subchapter-D/part-206/subpart-F/section-206.164",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "spectrum-undocumented-families",
+      "title": "Spectrum News: Undocumented families hesitant to seek FEMA aid after Texas floods (summary)",
+      "file": "sources/summary_spectrum_undocumented_families.txt",
+      "source_url": "https://spectrumlocalnews.com/tx/south-texas-el-paso/news/2025/07/24/undocumented-families-hesitant-to-seek-aid-after-floods",
+      "disaster_type": "flood",
+      "phase": "recovery"
+    },
+    {
+      "slug": "texas-tribune-kerr-denials",
+      "title": "Texas Tribune: FEMA denied or did not advance most Kerr County aid applications (summary)",
+      "file": "sources/summary_texas_tribune_kerr_denials.txt",
+      "source_url": "https://www.hppr.org/hppr-news/2025-10-17/fema-has-denied-or-not-advanced-most-kerr-county-aid-applications-after-deadly-july-4-flood",
+      "disaster_type": "flood",
+      "phase": "recovery"
+    },
+    {
+      "slug": "publico-vulnerable-families",
+      "title": "Público: Families without resources who lost everything in the Valencia floods (summary)",
+      "file": "sources/summary_publico_vulnerable_families.txt",
+      "source_url": "https://www.publico.es/sociedad/vulnerables-partida-doble-familias-recursos-han-perdido-dana.html",
+      "disaster_type": "flood",
+      "phase": "recovery"
+    },
+    {
+      "slug": "euronews-valencia-six-months",
+      "title": "Euronews: Valencians exhausted six months on from floods (summary)",
+      "file": "sources/summary_euronews_valencia_six_months.txt",
+      "source_url": "https://www.euronews.com/my-europe/2025/04/29/valencians-physically-emotionally-exhausted-6-months-on-from-floods",
+      "disaster_type": "flood",
+      "phase": "recovery"
+    },
+    {
+      "slug": "tpr-july-2026-floods",
+      "title": "Texas Tribune: FEMA won't help Texans after July 2026 floods (summary)",
+      "file": "sources/summary_tpr_july_2026_floods.txt",
+      "source_url": "https://www.tpr.org/environment/2026-10-21/fema-wont-help-texans-after-july-2026-floods-as-agency-tells-states-to-lead-disaster-response",
+      "disaster_type": "flood",
+      "phase": "recovery"
+    },
+    {
+      "slug": "gao-20-503",
+      "title": "GAO-20-503: Why FEMA aid applications are denied (summary)",
+      "file": "sources/summary_gao_20_503.txt",
+      "source_url": "https://www.gao.gov/products/GAO-20-503",
+      "disaster_type": "general",
+      "phase": "recovery"
+    },
+    {
+      "slug": "gao-26-108057",
+      "title": "GAO-26-108057: FEMA application barriers for people with disabilities (summary)",
+      "file": "sources/summary_gao_26_108057.txt",
+      "source_url": "https://www.gao.gov/products/gao-26-108057",
+      "disaster_type": "general",
+      "phase": "recovery"
     }
   ]
 }
