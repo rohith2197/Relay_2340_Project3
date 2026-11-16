@@ -24,10 +24,9 @@ python -m pip install -r requirements.txt
 cp .env.example .env        # then fill in ANTHROPIC_API_KEY and OPENROUTER_API_KEY
 ```
 
-Every new terminal: load `.env` (Django does not read it automatically), then prepare the data and start the server.
+Django loads `.env` automatically (via `python-dotenv`; real environment variables win). Prepare the data and start the server:
 
 ```bash
-set -a && source .env && set +a
 python manage.py migrate
 python manage.py load_dataset     # documents → cleaned chunks (knowledge app)
 python manage.py embed_chunks     # chunks → vectors (rag app)
@@ -158,6 +157,6 @@ The tests use a fake Claude client and a fake embedding model, so they need no A
 |---|---|
 | Chat page shows raw `**` or old styling | The browser cached the old `chat.js`. Hard refresh (Cmd+Shift+R). |
 | Every answer cites the same single source | Only one document is loaded. Run `load_dataset` then `embed_chunks`, and restart the server. |
-| Log says `OPENROUTER_API_KEY is not set; using keyword search only` | Load `.env` in that terminal (`set -a && source .env && set +a`) or add the key on Render. |
+| Log says `OPENROUTER_API_KEY is not set; using keyword search only` | Add the key to `.env` and restart the server, or add it on Render. |
 | "Relay could not get an answer" (HTTP 502) | Check `ANTHROPIC_API_KEY`, and the server log for the error type. |
 | Off-topic questions get answers, or on-topic ones get "not in my sources" | Adjust `RELAY_MIN_SIMILARITY` (raise to be stricter, lower to be looser) and test with `retrieve()`. |

@@ -11,11 +11,19 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Local development: read settings from .env if it exists. Variables already set
+# in the environment (for example on Render) take precedence over the file.
+# Tests skip it so they never use real API keys.
+if sys.argv[1:2] != ["test"]:
+    load_dotenv(BASE_DIR / ".env", override=False)
 
 
 # Quick-start development settings - unsuitable for production
