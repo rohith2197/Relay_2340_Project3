@@ -475,3 +475,179 @@ class EmbedChunksCommandTests(KnowledgeBaseMixin, TestCase):
                 patch("rag.embeddings.embed_texts", side_effect=fake_embed):
             call_command("embed_chunks", stdout=out)
         self.assertIn("4 embedded, 0 deleted, 4 chunks", out.getvalue())
+
+
+# ---------------------------------------------------------------------------
+# US 8 — Dynamic prompt selection
+# ---------------------------------------------------------------------------
+
+from .prompts import (  # noqa: E402  (placed after related test classes)
+    APPEAL_GUIDANCE,
+    CHECKLIST_GUIDANCE,
+    DEFAULT_GUIDANCE,
+    DOCUMENTATION_GUIDANCE,
+    ELIGIBILITY_GUIDANCE,
+    build_system_prompt,
+    classify_intent,
+    select_prompt,
+)
+
+
+class IntentClassifierTests(TestCase):
+    """classify_intent() should return the right intent label for representative questions."""
+
+    # --- checklist ---
+    def test_steps_triggers_checklist(self):
+        self.assertEqual(classify_intent("What are the steps to apply for FEMA?"), "checklist")
+
+    def test_how_do_i_apply_triggers_checklist(self):
+        self.assertEqual(classify_intent("How do I apply for assistance?"), "checklist")
+
+    def test_how_do_i_submit_triggers_checklist(self):
+        self.assertEqual(classify_intent("How do I submit my appeal?"), "checklist")
+
+    def test_checklist_keyword_triggers_checklist(self):
+        self.assertEqual(classify_intent("Give me a checklist for applying"), "checklist")
+
+    def test_walk_me_through_triggers_checklist(self):
+        self.assertEqual(classify_intent("Can you walk me through the process?"), "checklist")
+
+    # --- appeal (should not be shadowed by checklist when no checklist words) ---
+    def test_appeal_triggers_appeal(self):
+        self.assertEqual(classify_intent("I want to appeal FEMA's decision"), "appeal")
+
+    def test_denied_triggers_appeal(self):
+        self.assertEqual(classify_intent("My application was denied. What can I do?"), "appeal")
+
+    def test_denial_triggers_appeal(self):
+        self.assertEqual(classify_intent("I got a denial letter"), "appeal")
+
+    def test_dispute_triggers_appeal(self):
+        self.assertEqual(classify_intent("Can I dispute the rejection?"), "appeal")
+
+    # --- eligibility ---
+    def test_eligible_triggers_eligibility(self):
+        self.assertEqual(classify_intent("Am I eligible for FEMA assistance?"), "eligibility")
+
+    def test_qualify_triggers_eligibility(self):
+        self.assertEqual(classify_intent("Do I qualify if I'm undocumented?"), "eligibility")
+
+    def test_requirements_triggers_eligibility(self):
+        self.assertEqual(classify_intent("What are the requirements for disaster aid?"), "eligibility")
+
+    def test_undocumented_triggers_eligibility(self):
+        self.assertEqual(classify_intent("Can undocumented people get help?"), "eligibility")
+
+    def test_citizenship_triggers_eligibility(self):
+        self.assertEqual(classify_intent("Does citizenship affect my application?"), "eligibility")
+
+    def test_criteria_triggers_eligibility(self):
+        self.assertEqual(classify_intent("What criteria do I need to meet?"), "eligibility")
+
+    # --- documentation ---
+    def test_documents_triggers_documentation(self):
+        self.assertEqual(classify_intent("What documents do I need to provide?"), "documentation")
+
+    def test_lost_id_triggers_documentation(self):
+        self.assertEqual(classify_intent("I lost my ID in the flood"), "documentation")
+
+    def test_missing_papers_triggers_documentation(self):
+        self.assertEqual(classify_intent("My papers are missing"), "documentation")
+
+    def test_proof_triggers_documentation(self):
+        self.assertEqual(classify_intent("What counts as proof of residence?"), "documentation")
+
+    def test_no_lease_triggers_documentation(self):
+        self.assertEqual(classify_intent("I have no lease, can I still apply?"), "documentation")
+
+    # --- general (fallback) ---
+    def test_unrelated_question_falls_back_to_general(self):
+        self.assertEqual(classify_intent("What is FEMA?"), "general")
+
+    def test_background_question_falls_back_to_general(self):
+        self.assertEqual(classify_intent("Tell me about the Valencia floods"), "general")
+
+    def test_empty_question_falls_back_to_general(self):
+        self.assertEqual(classify_intent(""), "general")
+
+    def test_whitespace_only_falls_back_to_general(self):
+        self.assertEqual(classify_intent("   "), "general")
+
+
+class SelectPromptTests(TestCase):
+    """select_prompt() returns the right guidance string and build_system_prompt() includes it."""
+
+    def test_checklist_question_returns_checklist_guidance(self):
+        prompt = select_prompt("What are the steps to apply?", [])
+        self.assertEqual(prompt, CHECKLIST_GUIDANCE)
+
+    def test_appeal_question_returns_appeal_guidance(self):
+        prompt = select_prompt("My application was denied, can I appeal?", [])
+        self.assertEqual(prompt, APPEAL_GUIDANCE)
+
+    def test_eligibility_question_returns_eligibility_guidance(self):
+        prompt = select_prompt("Am I eligible if I am undocumented?", [])
+        self.assertEqual(prompt, ELIGIBILITY_GUIDANCE)
+
+    def test_documentation_question_returns_documentation_guidance(self):
+        prompt = select_prompt("What documents do I need?", [])
+        self.assertEqual(prompt, DOCUMENTATION_GUIDANCE)
+
+    def test_general_question_returns_default_guidance(self):
+        prompt = select_prompt("Tell me about the Valencia floods", [])
+        self.assertEqual(prompt, DEFAULT_GUIDANCE)
+
+    def test_history_is_accepted_but_not_required(self):
+        # history should not affect the result (classification is question-only)
+        history = [{"role": "user", "content": "hi"}, {"role": "assistant", "content": "hello"}]
+        self.assertEqual(
+            select_prompt("What documents do I need?", history),
+            select_prompt("What documents do I need?", []),
+        )
+
+    def test_grounding_rules_always_present_in_system_prompt(self):
+        for question in (
+            "What are the steps to apply?",
+            "I was denied — can I appeal?",
+            "Am I eligible?",
+            "I lost my ID",
+            "What is FEMA?",
+        ):
+            with self.subTest(question=question):
+                system = build_system_prompt(question, [])
+                self.assertIn("Use only the provided documents", system)
+                self.assertIn("not a lawyer", system)
+
+    def test_intent_guidance_is_appended_after_grounding_rules(self):
+        system = build_system_prompt("What are the steps to apply?", [])
+        grounding_end = system.index("not a lawyer")
+        checklist_start = system.index("numbered action list")
+        self.assertLess(grounding_end, checklist_start)
+
+    def test_different_intents_produce_different_system_prompts(self):
+        checklist = build_system_prompt("What are the steps to apply?", [])
+        appeal = build_system_prompt("I was denied — can I appeal?", [])
+        eligibility = build_system_prompt("Am I eligible for FEMA?", [])
+        documentation = build_system_prompt("What documents do I need?", [])
+        general = build_system_prompt("Tell me about FEMA", [])
+        prompts = {checklist, appeal, eligibility, documentation, general}
+        # All five intents produce distinct system prompts
+        self.assertEqual(len(prompts), 5)
+
+    def test_system_prompt_sent_to_claude_uses_question_intent(self):
+        """End-to-end: the generated answer request should include intent-specific text."""
+        from knowledge.ingestion import ingest_document  # local import to keep test isolated
+        with override_settings(RELAY_EMBEDDING_API_KEY=""):
+            retrieval.invalidate()
+            ingest_document(slug="test-appeals-us8", title="FEMA Appeals",
+                            raw_text=APPEALS_TEXT, disaster_type="flood", phase="recovery")
+        client = FakeClient([text("You can appeal within 60 days.", cite(0, 0, 1, "60 days"))])
+        with patch("rag.generation.get_client", return_value=client), \
+                override_settings(RELAY_EMBEDDING_API_KEY=""):
+            retrieval.invalidate()
+            answer_question("I was denied. How do I appeal?", [])
+        system_prompt = client.answer_calls[0]["system"]
+        # Appeal guidance should be present
+        self.assertIn("denial letter", system_prompt)
+        # Grounding rules should also be present
+        self.assertIn("Use only the provided documents", system_prompt)
