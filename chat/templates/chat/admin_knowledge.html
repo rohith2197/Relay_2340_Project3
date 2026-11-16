@@ -1,0 +1,58 @@
+{% extends "chat/admin_base.html" %}
+{% block title %}Knowledge Base{% endblock %}
+{% block content %}
+<h1>Knowledge Base</h1>
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+  <p class="{% if message.tags %}{{ message.tags }}{% endif %} notice">{{ message }}</p>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="cards" style="margin-bottom:1.5rem">
+  <div class="card"><strong>{{ doc_count }}</strong>Total documents</div>
+  <div class="card"><strong>{{ active_count }}</strong>Active</div>
+  <div class="card"><strong>{{ chunk_count }}</strong>Chunks indexed</div>
+</div>
+
+<p class="muted">Use the actions below to manage the knowledge base. All changes take effect immediately for new questions.</p>
+
+<section style="margin-top:2rem">
+  <h2>Actions</h2>
+
+  <form method="post" onsubmit="return confirm('Reload documents from dataset.json? Existing documents will be updated or left unchanged (not deleted).')">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="reload">
+    <button type="submit" class="action-btn">↺ Reload from dataset</button>
+    <span class="muted">Runs load_dataset — adds or updates documents from <code>data/dataset.json</code>. Does not delete any documents.</span>
+  </form>
+
+  <form method="post" onsubmit="return confirm('Rebuild all vectors? This re-embeds every chunk and may take a few seconds.')" style="margin-top:1rem">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="rebuild_vectors">
+    <button type="submit" class="action-btn">⟳ Rebuild vectors</button>
+    <span class="muted">Runs embed_chunks --rebuild — re-embeds all chunks from scratch. Requires OPENROUTER_API_KEY.</span>
+  </form>
+
+  <form method="post" onsubmit="return confirm('Clear the entire knowledge base and then reload from dataset.json? This deletes all documents and chunks.')" style="margin-top:1rem">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="clear_and_reload">
+    <button type="submit" class="action-btn warn-btn">⚠ Clear and reload</button>
+    <span class="muted">Deletes all documents and chunks, then runs load_dataset to reload from <code>data/dataset.json</code>.</span>
+  </form>
+
+  <form method="post" onsubmit="return confirm('Delete ALL documents and chunks? This cannot be undone.')" style="margin-top:1rem">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="clear">
+    <button type="submit" class="action-btn danger-btn">✕ Clear only (no reload)</button>
+    <span class="muted">Permanently deletes every document and chunk. Vectors are pruned automatically.</span>
+  </form>
+</section>
+
+<section style="margin-top:2rem">
+  <h2>Recent documents</h2>
+  <p class="muted"><a href="/admin/knowledge/document/">Manage all documents in Django Admin →</a></p>
+</section>
+{% endblock %}

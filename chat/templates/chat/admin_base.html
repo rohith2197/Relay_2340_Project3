@@ -15,6 +15,15 @@
     th{background:#f3efe9}.muted{color:#666}.warn{background:#fff3cd;border:1px solid #e0b84b;padding:.75rem 1rem}
     .bad{color:#b00020;font-weight:600}.cards{display:flex;gap:1rem;flex-wrap:wrap}
     .card{background:#fff;border:1px solid #ddd;padding:1rem 1.5rem;min-width:140px}.card strong{display:block;font-size:1.6rem}
+    .notice{background:#d4edda;border:1px solid #a3cfbb;padding:.6rem 1rem;margin:.5rem 0}
+    .notice.error{background:#f8d7da;border-color:#f1b0b7}
+    .action-btn{padding:.5rem 1.1rem;font-size:.95rem;cursor:pointer;border:1px solid #aaa;background:#fff;border-radius:4px;margin-right:.5rem}
+    .action-btn:hover{background:#f0ece6}
+    .warn-btn{border-color:#c09a30;color:#7a5c00;background:#fff8e6}
+    .warn-btn:hover{background:#fef3cc}
+    .danger-btn{border-color:#b00020;color:#b00020;background:#fff5f5}
+    .danger-btn:hover{background:#ffe0e3}
+    .messages{margin:1rem 0}
   </style>
 </head>
 <body>
@@ -22,6 +31,7 @@
     <a href="{% url 'chat:index' %}"><strong>relay</strong> admin</a>
     <a href="{% url 'chat:admin_performance' %}" {% if request.resolver_match.url_name == 'admin_performance' %}class="active"{% endif %}>Performance</a>
     <a href="{% url 'chat:admin_logs' %}" {% if request.resolver_match.url_name == 'admin_logs' %}class="active"{% endif %}>Usage logs</a>
+    <a href="{% url 'chat:admin_knowledge' %}" {% if request.resolver_match.url_name == 'admin_knowledge' %}class="active"{% endif %}>Knowledge Base</a>
   </header>
   <main>{% block content %}{% endblock %}</main>
 </body>

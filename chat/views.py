@@ -57,11 +57,9 @@ def ask(request):
         return JsonResponse(get_answer(question.strip(), history))
     except BackendUnavailable:
         record_failure(started, 503, "BackendUnavailable")
-        return JsonResponse({"error": "Relay’s answer service is not connected yet. Please try again once the project backend is ready."}, status=503)
+        return JsonResponse({"error": "Relay's answer service is not connected yet. Please try again once the project backend is ready."}, status=503)
     except Exception as exc:
         record_failure(started, 502, type(exc).__name__)
         # Do not log questions, history, credentials, or backend exception text.
         logger.error("Answer service failure: %s", type(exc).__name__)
         return JsonResponse({"error": "Relay could not get an answer. Please try again."}, status=502)
-    record_query(started, question, 200)
-    return JsonResponse(answer)
