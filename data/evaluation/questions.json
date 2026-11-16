@@ -1,0 +1,388 @@
+{
+  "version": 1,
+  "description": "US 9 reference cases; never ingest this file. Expectations are grounded in the committed corpus, not independently verified current policy.",
+  "cases": [
+    {
+      "id": "appeal-deadline",
+      "question": "How long do I have to appeal a FEMA decision?",
+      "history": [],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "Appeal within 60 days of the date of the decision letter.",
+          "any_keywords": [
+            "60 days",
+            "sixty days"
+          ]
+        },
+        {
+          "fact": "The period starts from the date of the letter.",
+          "any_keywords": [
+            "date",
+            "dated"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "fema-appeals",
+          "file": "data/sources/fema_appeals.txt",
+          "url": "https://www.fema.gov/assistance/individual/after-applying/appeals",
+          "evidence": "If you disagree with FEMA's decision, you may appeal within 60 days of the date of the letter."
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "appeal-identifiers",
+      "question": "What identifying numbers should be on each page of my FEMA appeal documents?",
+      "history": [],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "Include the FEMA application number.",
+          "any_keywords": [
+            "application number"
+          ]
+        },
+        {
+          "fact": "Include the disaster number on every page.",
+          "any_keywords": [
+            "disaster number"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "fema-appeals",
+          "file": "data/sources/fema_appeals.txt",
+          "url": "https://www.fema.gov/assistance/individual/after-applying/appeals",
+          "evidence": "you must include your FEMA application number and disaster number on every page."
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "appeal-offline",
+      "question": "Can I submit FEMA appeal documents without using the internet?",
+      "history": [],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "In-person submission is available.",
+          "any_keywords": [
+            "in person",
+            "in-person",
+            "recovery center"
+          ]
+        },
+        {
+          "fact": "Mail and fax submission are available.",
+          "any_keywords": [
+            "mail"
+          ]
+        },
+        {
+          "fact": "Fax is an alternative.",
+          "any_keywords": [
+            "fax"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "fema-appeals",
+          "file": "data/sources/fema_appeals.txt",
+          "url": "https://www.fema.gov/assistance/individual/after-applying/appeals",
+          "evidence": "You can submit your appeal documents online, in person, by mail or by fax."
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "insurance",
+      "question": "Can FEMA pay for disaster losses that my insurance already covered?",
+      "history": [],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "FEMA cannot duplicate assistance for needs already covered by insurance.",
+          "any_keywords": [
+            "cannot",
+            "can't",
+            "does not",
+            "not duplicate"
+          ]
+        },
+        {
+          "fact": "Uncovered disaster needs may still qualify.",
+          "any_keywords": [
+            "unmet",
+            "not cover",
+            "uncovered",
+            "not covered"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "fema-eligibility",
+          "file": "data/sources/fema_eligibility.txt",
+          "url": "https://www.fema.gov/assistance/individual/program/eligibility",
+          "evidence": "FEMA cannot provide assistance for needs already met by another source, like insurance or other programs."
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "citizen-child",
+      "question": "Can an undocumented parent apply for FEMA assistance on behalf of a US citizen child?",
+      "history": [],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "Parent or legal guardian applies as co-applicant on behalf of the child.",
+          "any_keywords": [
+            "co-applicant",
+            "co applicant"
+          ]
+        },
+        {
+          "fact": "They must live in the same household.",
+          "any_keywords": [
+            "same household",
+            "live together"
+          ]
+        },
+        {
+          "fact": "The child must be under 18 when the disaster occurred.",
+          "any_keywords": [
+            "under 18",
+            "younger than 18"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "fema-citizenship-status",
+          "file": "data/sources/fema_citizenship_status.txt",
+          "url": "https://www.fema.gov/assistance/individual/program/citizenship-immigration-status",
+          "evidence": "The parent or legal guardian must apply as the co-applicant, and the child must be under 18 at the time the disaster occurred."
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "occupancy-proof",
+      "question": "What can I use as FEMA proof of occupancy if I do not have a lease?",
+      "history": [],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "A utility bill is accepted as an alternative.",
+          "any_keywords": [
+            "utility bill"
+          ]
+        },
+        {
+          "fact": "Rent receipts are another accepted option.",
+          "any_keywords": [
+            "rent receipt",
+            "rent receipts"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "fema-ownership-occupancy",
+          "file": "data/sources/fema_ownership_occupancy.txt",
+          "url": "https://www.fema.gov/assistance/individual/after-applying/verifying-home-ownership-occupancy",
+          "evidence": "Proof of Occupancy (you only need ONE of these):"
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "recovery-center",
+      "question": "Where can I get in-person help understanding my FEMA letter and application status?",
+      "history": [],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "A Disaster Recovery Center can help.",
+          "any_keywords": [
+            "disaster recovery center"
+          ]
+        },
+        {
+          "fact": "It can help with application status or letters.",
+          "any_keywords": [
+            "status",
+            "letter"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "fema-recovery-centers",
+          "file": "data/sources/fema_recovery_centers.txt",
+          "url": "https://egateway.fema.gov/ESF6/DRCLocator",
+          "evidence": "Understand any letters you get from FEMA."
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "inspection-fee",
+      "question": "Does FEMA charge for housing inspections, and how can I identify a real inspector?",
+      "history": [],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "FEMA never charges for an inspection.",
+          "any_keywords": [
+            "never",
+            "no fee",
+            "free",
+            "does not charge"
+          ]
+        },
+        {
+          "fact": "A real inspector has an official government badge.",
+          "any_keywords": [
+            "badge",
+            "identification"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "fema-disaster-fraud",
+          "file": "data/sources/fema_disaster_fraud.txt",
+          "url": "https://www.fema.gov/assistance/individual/disaster-fraud",
+          "evidence": "FEMA never charges a fee for an inspection."
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "birth-certificate",
+      "question": "Who should I contact to replace a lost birth certificate?",
+      "history": [],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "Contact the vital records office.",
+          "any_keywords": [
+            "vital records"
+          ]
+        },
+        {
+          "fact": "Use the state or territory where you were born.",
+          "any_keywords": [
+            "born",
+            "birth state"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "usagov-replace-id",
+          "file": "data/sources/usagov_replace_id.txt",
+          "url": "https://www.usa.gov/replace-vital-documents",
+          "evidence": "Birth certificate: contact the vital records office of the state or territory where you were born to get a certified copy."
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "appeal-followup",
+      "question": "How long do I have to do that?",
+      "history": [
+        {
+          "role": "user",
+          "content": "Can I appeal a FEMA denial?"
+        },
+        {
+          "role": "assistant",
+          "content": "You can appeal a FEMA decision."
+        }
+      ],
+      "unsupported": false,
+      "expected_facts": [
+        {
+          "fact": "Resolve the follow-up as an appeal deadline of 60 days.",
+          "any_keywords": [
+            "60 days",
+            "sixty days"
+          ]
+        },
+        {
+          "fact": "Measure from the date of the decision letter.",
+          "any_keywords": [
+            "letter"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "slug": "fema-appeals",
+          "file": "data/sources/fema_appeals.txt",
+          "url": "https://www.fema.gov/assistance/individual/after-applying/appeals",
+          "evidence": "If you disagree with FEMA's decision, you may appeal within 60 days of the date of the letter."
+        }
+      ],
+      "manual_review": "Check every expected fact, qualifications, contradictions and whether cited passages support the answer."
+    },
+    {
+      "id": "unsupported-pizza",
+      "question": "What is the best pizza topping?",
+      "history": [],
+      "unsupported": true,
+      "expected_facts": [
+        {
+          "fact": "State that the requested answer cannot be determined from available sources; do not invent it.",
+          "any_keywords": [
+            "couldn't find",
+            "cannot determine",
+            "can't determine",
+            "cannot access",
+            "can't access",
+            "do not have access",
+            "don't have access",
+            "not in",
+            "cannot verify",
+            "unable to"
+          ]
+        }
+      ],
+      "sources": [],
+      "manual_review": "The curated disaster recovery corpus does not establish a best pizza topping. General guidance may cite relevant sources, but must not invent the requested fact."
+    },
+    {
+      "id": "unsupported-personal-status",
+      "question": "Has FEMA approved my personal application number 999999999, and exactly how much will I receive?",
+      "history": [],
+      "unsupported": true,
+      "expected_facts": [
+        {
+          "fact": "State that the requested answer cannot be determined from available sources; do not invent it.",
+          "any_keywords": [
+            "couldn't find",
+            "cannot determine",
+            "can't determine",
+            "cannot access",
+            "can't access",
+            "do not have access",
+            "don't have access",
+            "not in",
+            "cannot verify",
+            "unable to"
+          ]
+        }
+      ],
+      "sources": [],
+      "manual_review": "The corpus has general guidance, not access to personal applications or award decisions. General guidance may cite relevant sources, but must not invent the requested fact."
+    }
+  ]
+}
